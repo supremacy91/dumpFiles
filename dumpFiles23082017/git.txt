@@ -1,0 +1,84 @@
+cat /proc/cpuinfo - информация о процессорах системы
+ctrl + D - возможно выходит из режима набора в консоли Ubuntu
+
+sudo dpkg --configure -a - дебажит багнутый процесс установки
+
+pkexec chmod 440 /etc/sudoers.d/README
+pkexec chmod 755 /etc/sudoers.d
+
+systemctl status apache2.service
+
+sudo su - меняет пользователя на root
+если стоит $ в командной строке Linux - то мы под обычным пользователем. 
+если стоит # в командной строке Linux - то мы под root
+
+sudo vipw - выводит список пользователей 
+sudo users - показывает текущего пользователя
+
+git status - статус на данный момент
+git log - выводит историю коммитов
+git log -p - в логе коммитов будут указаны изменения
+git clean -d -f -удаляет все untracked файлы и директории
+git branch -d name Удаляет ветку name
+git checkout -b name создает и прыгает на ветку name
+git merge name сливает текущую ветку с веткой name
+git branch name создает ветку name
+git branch name origin/master1 создает ветку name и загружает в нее ветку master1 по ссылке origin
+git remote Чтобы просмотреть, какие удалённые серверы уже настроены
+git remote -v Чтобы посмотреть, какому URL соответствует сокращённое имя в Git
+git remote rename name1 name2 переименовует ссылку
+git remote rm name удаляет ссылку
+git remote rm origin удаляет ссылку на репозиторий
+git remote add origin https://github.com/supremacy91/testnext.git - добавляет удаленный сервер
+git diff  непроиндексированные изменения относительно последней индексации или коммита
+git diff --cached проиндексированные изменения оттносительно последнего коммита
+git commit --amend заменяет последний коммит
+git checkout <имя файла>/. отменяет не проинедксированные изменения в файле/во всех файлах, но толкьо в том случае, если файлы находятся под версионным контролем (не untracked)
+git reset 
+git reset --soft HEAD^ убирает последний коммит оставляя изменения
+git reset --hard HEAD^ убирает последний коммит вместе с изменениями
+git reset HEAD - откатывет индекс к предыдущему или а untracked если такового ранее не было
+git checkout -- name - отменяет удаление проиндексированного файла
+git rm name удаляет файл с директоии
+git rm --cached name удаляет файл с индекса
+git push origin master - заливает в репозиторий
+git revert .....
+
+в PHPSTORM: пкм(где угодно в открытом проекте) -> Git -> Resolve Conflicts...
+
+which phpstorm(или другйо исполняемый файл) - выдает полный путь к Шторму или другомй исполняемому файлу
+
+sudo rm -R -d name -удаляет рекурсивно директорию с файлами
+sudo rm -R -d name/* -удаляет рекурсивно файлы с директории
+
+rm -v file - удалить файл
+rm -vR dir - удалить каталог
+Ключ -v покажет "комментарий", т.е. выведет на экран подтверждение действий 
+например, будет написано: removed `xxx/testfile'
+
+---------------------------------------------------------------------------------------------------------------------
+
+mv file newfile - меняет имя файла file на newfile
+mkdir ~/My_directory_name - создаст директорию My_directory_name в каталоге home
+mkdir /My_directory_name - создаст директорию My_directory_name в каталоге Computerм
+
+создание файлов
+touch "filename" -------создать пустой файл
+cat > "filename" --------и ввод закончить ctrl+z
+vim "filename" --------создать или редактировать "filename" 
+nano filename
+echo "текст" > filename 
+
+---------------------------------------------------------------------------------------------------------------------
+
+При работе с vim:
+
+    :q - quit if no changes were made
+    :q! - quit and destroy any changes made
+    :wq - write changes (save) and quit
+    :x - similar to :wq, only write the file if changes were made, then quit
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+Roger Shah and Signum – Healesville Sanctuary

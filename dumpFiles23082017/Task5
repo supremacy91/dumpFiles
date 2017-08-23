@@ -1,0 +1,47 @@
+Нужно сделать модуль для Magento 1, включив который в конфигурации не показывал бы цены на фронтенде для незарегистрированных пользователей и не позволял бы добавлять в корзину такие товары. На странице товара для таких товаров необходимо вывести ссылку на страницу авторизации.
+
+Mage::app()->isInstalled() && Mage::getSingleton('customer/session')->isLoggedIn()
+или
+Mage::isInstalled() && Mage::getSingleton('customer/session')->isLoggedIn()
+
+
+Estimation
+1) Создать структуру модуля, создать файл system.xml -  в нем внести возможность активировать и дезактивировать модуль через админку. (5 ч) 
+2) Сделать функционал сокрытия цен для тоаров на фронтенде как для просмотра одного товара так  и для групп товаров в том случае, если их просматривает неавторизованный пользователь. (5 ч)
+3) Реализовать вывод на фронтенде ссылки на авторизацию для неавторизованных  пользователей, которые просматривают товар (5 ч)
+
+
+
+Mage_Catalog_Block_Product_Price
+ protected function _toHtml()
+    {
+        if (!$this->getProduct() || $this->getProduct()->getCanShowPrice() === false) {
+            return '';
+        }
+        return parent::_toHtml();
+    }
+
+метод getCanShowPrice() - считывает через геттер параметр can_show_price, которого там нет, потому результат сравнения false. Устанавливаем setCanShowPrice(false) - и цены сокрыты
+
+Mage_Catalog_Block_Product_List
+ класс отвечает за коллекции товаров (например когда из списка выбираем что добавить)
+в нем метод _beforeToHtml() выбрасывает событие
+ Mage::dispatchEvent('catalog_block_product_list_collection', array(
+            'collection' => $this->_getProductCollection()
+        ));
+Сделав на него обработчик можно засетить нужный параметр
+   public function observe_list($observer){
+        $moduleActivated = Mage::getStoreConfig("price_disabling/settings/activation");
+        if($moduleActivated) {
+            if (!Mage::getSingleton("customer/session")->isLoggedIn()) {
+                $collection = $observer->getEvent()->getCollection();
+                foreach($collection as $col) {                 
+                    $col->setCanShowPrice(false);
+                }
+            }
+        }
+
+    }
+
+Mage_Catalog_Helper_Product_View
+ класс отвечает за просмотр товара (например когда клацаем на view details)

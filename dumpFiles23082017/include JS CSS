@@ -1,0 +1,31 @@
+All methods reside in Mage_Page_Block_Html_Head class. The first pair is addCss and addJs. The syntax is quite simple:
+
+<action method="addJs">
+    <script>scriptaculous/scriptaculous.js</script>
+</action>
+	
+
+Some core modules use <file> instead of <script>. There are some talks over the internet regarding which approach is correct. The fact is there is absolutely no reason what container to use. Magento will accept anything as long as the closing tag matches opening one and will send the contents as the first argument to the addJs method of Mage_Page_Block_Html_Head class.
+
+You got it right, there is also a second argument. It allows you to send any additional parameters to be included into <script> or <link> tag:
+
+<action method="addCss">
+    <name>print.css</name>
+    <params>media="print"</params>
+</action>
+
+
+The path of a script added by addJs method is relative to Magento root /js directory. For addCss method it is relative to skin directory of your theme.
+
+In fact both those methods are just wrappers for universal addItem method which can add either CSS or JavaScript into your page.
+
+The basic syntax is the following:
+
+<action method="addItem">
+    <type>js</type>
+    <name>lib/ds-sleight.js</name>
+</action>
+
+
+The type can be js, js_css, skin_js, skin_css, link_rel or rss.
+

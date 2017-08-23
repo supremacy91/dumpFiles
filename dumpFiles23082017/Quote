@@ -1,0 +1,23 @@
+1) Один ли класс для квоты  ?  Mage_Sales_Model_Quote
+2) Разница Mage_Checkout_Model_Cart  Mage_Sales_Model_Quote
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+Mage_Sales_Model_Quote extends Mage_Core_Model_Abstract
+Mage_Checkout_Model_Cart extends Varien_Object implements Mage_Checkout_Model_Cart_Interface
+
+quote = cart contents in Magento. Theoretically the quote is an offer and if the user accepts it (by checking out) it converts to order. You can control the lifetime yourself and they store metadata about the store, totals information , shipping and billing relations, relations to payment method and shipping method (that is quoted separately) and items 
+A Cart is composed of a Quote so Cart Product is really a Quote Item so when you deal with $cart->addProduct() it does some check and add it by $this->getQuote()->addProduct() Don't use directly (when it's possible) quote function like Mage_Sales_Model_Quote::addProduct() because checks will not be done.
+
+A quote is actually a 'cart' object.
+A customer can have many quotes. One for each website.
+the quote object is not created when the customer is created. It is created when the customer adds the first product to the cart.
+Also a quote is not necessarily assigned to a customer. You can have a quote when browsing the website as guest.
+In that case the quote remains in the db after the session expires.
+The quote is created when you call Mage::getSingleton("checkout/session")->getQuote(). 

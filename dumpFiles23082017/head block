@@ -1,0 +1,38 @@
+Блок head нужен для того, что бы использовать функции подключения JS CSS файлов.
+
+Блок head обьявлен в app/design/adminhtml/default/default/layout/main.xml
+<block type="adminhtml/page_head" name="head" as="head" template="page/head.phtml">
+
+Класс блока: 
+Mage_Adminhtml_Block_Page_Head  extends 
+Mage_Page_Block_Html_Head       extends 
+Mage_Core_Block_Template
+
+
+Основные используемые методы блока:
+public function addCss($name, $params = "")
+    {
+        $this->addItem('skin_css', $name, $params);
+        return $this;
+    }
+
+ public function addJs($name, $params = "")
+    {
+        $this->addItem('js', $name, $params);
+        return $this;
+    }
+
+ public function addItem($type, $name, $params=null, $if=null, $cond=null)
+    {
+        if ($type==='skin_css' && empty($params)) {
+            $params = 'media="all"';
+        }
+        $this->_data['items'][$type.'/'.$name] = array(
+            'type'   => $type,
+            'name'   => $name,
+            'params' => $params,
+            'if'     => $if,
+            'cond'   => $cond,
+       );
+        return $this;
+    }

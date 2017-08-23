@@ -1,0 +1,17 @@
+Mage::getSingleton('core/resource'); - для БД
+
+//database read adapter 
+$read = Mage::getSingleton('core/resource')->getConnection('core_read'); 
+ //database write adapter 
+$write = Mage::getSingleton('core/resource')->getConnection('core_write');
+
+------------------------------------------------------------------------------------------------------------------------
+
+Mage::getSingleton('core/layout'); - для Layouts
+
+/Mage/Core/Controller/Varien/Action.php
+ public function getLayout() {return Mage::getSingleton('core/layout');}
+
+------------------------------------------------------------------------------------------------------------------------
+
+Mage::getSingleton('adminhtml/session') - для сессий 

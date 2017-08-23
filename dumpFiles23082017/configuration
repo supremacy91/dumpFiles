@@ -1,0 +1,10 @@
+There are three main configuration nodes that are most commonly used to specify
+the configuration scope:
+ <global>
+	 <models>
+	 <blocks>
+	 <helpers>
+	 <resources>
+ <adminhtml>
+ <frontend>
+

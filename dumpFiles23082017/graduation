@@ -1,0 +1,90 @@
+Refund
+
+При просмотре заказа, если метод оплаты был онлайновый - то можно сразу нажать Credit Memo. Но тогда можно будет сделать только Refund offline. Чтобы отобразилась кнопка Refund (произвести Refund online) - нужно зайти в инвойс и нажать Credit Memo в нем. Тогда должны будут отображены 2 кнопки: Refund и  Refund Offline.  Для заказов с онлайновой оплатой инвойс на полную сумму возврата делается автоматически при создании заказа. Для товаров с оффлайновым методом оплаты инвойся делаются вручную и для них не будет кнопки Refund. Для таких товаров без разницы, как заходить на Credit Memo - через иновйс или через ордер.
+
+--------------------------------------------------------------------------------------------------------------
+
+
+https://www.classyllama.com/blog/magento-collecttotals-core-process - хорошая статья
+The collectTotals process
+
+сначала в классе Mage_Sales_Model_Quote вызывается collectTotals()
+он выбрасывает событие sales_quote_collect_totals_before 
+Затем перебирает все адреса и вызывает ихний метод collectTotals(), который проходит по всем коллекторам, вызывая на них метод collect(), который перебирает список продуктов и считает значения.
+
+Magento use Mage_Sales_Model_Quote_Address_Total_Collector class to collect individual total models by “global/sales/quote/totals” key in config.xml.
+тотал модели обьявляются внутри нодов:
+<global>
+ <sales>
+   <quote>
+      <totals>
+             .....
+      </totals>
+   </quote>
+ </sales>
+</global>
+ 
+<global>	
+	<sales>
+  	    <quote>
+                <totals>
+                    <nominal>
+                        <class>sales/quote_address_total_nominal</class>
+                        <before>subtotal</before>
+                    </nominal>
+                    <subtotal>
+                        <class>sales/quote_address_total_subtotal</class>
+                        <after>nominal</after>
+                        <before>grand_total</before>
+                    </subtotal>
+                    ...
+                </totals>
+            </quote>
+	</sales>
+</global>
+тотал модели являются наследниками Mage_Sales_Model_Quote_Address_Total_Abstract
+например, class Mage_Sales_Model_Quote_Address_Total_Subtotal extends Mage_Sales_Model_Quote_Address_Total_Abstract
+
+Как внедряются описанные в конфиге тоталы в процесс чекаута:
+Magento use Mage_Sales_Model_Quote_Address_Total_Collector class to collect individual total models by “global/sales/quote/totals” key in config.xml.
+
+В какой последовательности запускаются тотал модели:
+1. Checkout Cart call save() method.
+2. Quote call collectTotals() method to collect totals.
+3. Quote Address call collectTotals() method to collect address totals.
+4. Mage_Sales_Model_Quote_Address_Total_Collector class was used to excute on each Total model.
+
+Когда запускаются тотал модели:
+– Shopping cart display action.
+– Add product to shopping cart action.
+– Add products in group to shopping cart action.
+– Update product configuration for a cart item.
+
+Какими данными обычно манипулируют тотал модели:
+Total models have access to below objects:
+– Mage_Sales_Model_Quote_Address, Quote item, product, store.
+The objects they usually manipulate:
+– Mage_Sales_Model_Quote_Address, Quote item.
+
+
+<global>
+. . .
+    <sales>
+        <quote>
+            <totals>
+                <nominal>
+                    <class>sales/quote_address_total_nominal</class>
+                    <before>subtotal</before>
+                </nominal>
+                <subtotal>
+                    <class>sales/quote_address_total_subtotal</class>
+                    <after>nominal</after>
+                    <before>grand_total</before>
+                </subtotal>
+                . . .
+            </totals>
+        </quote>
+    . . .
+    </sales>
+. . .
+</global>

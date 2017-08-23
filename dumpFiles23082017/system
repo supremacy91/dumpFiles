@@ -1,0 +1,4 @@
+System -> Configuration
+
+System -> Configuration -> Web -> Search Engines Optimization -> Use Web Server Rewrites = No - отменяет реврайты 
+System -> Configuration -> Developer -> Debug -> Template Path Hints = Yes - для отображения блоков

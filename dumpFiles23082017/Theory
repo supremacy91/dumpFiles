@@ -1,0 +1,42 @@
+Pattens
+1. Model View Controller Pattern
+2. Front Controller Pattern
+3. Factory Pattern
+4. Singleton Pattern
+5. Registry Pattern
+6. Prototype Pattern
+7. Object Pool Pattern
+8. Iterator Pattern
+9. Lazy Loading Pattern
+10. Service Locator Pattern
+11. Module Pattern
+12. Observer Pattern
+
+Темы в магенто
+System->Configuration->Design->Package->Theme
+
+
+Права и создание пользователей
+System->Permisions->Roles - создание группы пользователей с определенными правами
+System->Permisions->Users - создание самих пользователей, которым ставится в соответсвие группа польователей
+
+
+Связь формы и табов на ней
+в конструкторе таба: $this->setDestElementId('edit_form');
+в форме: protected function _prepareForm()
+    {
+        $form = new Varien_Data_Form(
+            array('id' => 'edit_form', 'action' => $this->getUrl('menu_admin/adminhtml_menu/save'), 'method' => 'post')
+        );
+        $form->setUseContainer(true);
+        $this->setForm($form);
+        return parent::_prepareForm();
+    }
+
+
+Добавление JS CSS:
+Где есть addJs и addItem(css):
+"adminhtml/page_head"  потому что он наследует Mage/Page/Block/Html/Head.php
+css файлы всегда берутся только из самой темы
+Js файлы могут браться глобально из папки js корня магенты (метод addJs) либо из темы(метод addItem)
+Корневые методы addJs addItem addCss определены в Mage/Page/Block/Html

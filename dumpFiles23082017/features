@@ -1,0 +1,12 @@
+Magento Encryption
+
+Encryption is done via the Mage_Core_Model_Encryption class.
+Hashing runs via the method hash which uses MD5. Not sure why did didn't go with SHA but it should be sufficient.
+Encrypting data for later use is done using the encrypt method that use the Varien_Crypt class that by default relies on Mcrypt to do it's job.
+Since it uses a factory pattern you can easily use other encryption methods as well in theory by adding a class file in the app/code/local/Varien/Crypt directory.
+The Varien_Crypt_Mcrypt class is a wrapper for PHP Mcrypt used to encrypt data with the key given in the local.xml file under node path global/crypt/key. If you want to add your own encryption class you can probably use that class best as an example
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+

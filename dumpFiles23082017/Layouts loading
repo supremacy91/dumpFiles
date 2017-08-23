@@ -1,0 +1,58 @@
+Mage_Core_Block_Abstract:
+
+public function setLayout(Mage_Core_Model_Layout $layout)
+    {
+        $this->_layout = $layout;
+        Mage::dispatchEvent('core_block_abstract_prepare_layout_before', array('block' => $this));
+        $this->_prepareLayout();
+        Mage::dispatchEvent('core_block_abstract_prepare_layout_after', array('block' => $this));
+        return $this;
+    }
+protected function _prepareLayout()
+    {
+        return $this;
+    }
+
+-------------------------------------------------------------------------------------------------------------------
+
+Mage_Adminhtml_Block_Widget_Grid:
+
+protected function _prepareGrid()
+    {
+        $this->_prepareColumns();
+        $this->_prepareMassactionBlock();
+        $this->_prepareCollection();
+        return $this;
+    }
+
+    protected function _beforeToHtml()
+    {
+        $this->_prepareGrid();
+        return parent::_beforeToHtml();
+    }
+
+-------------------------------------------------------------------------------------------------------------------
+
+Mage_Adminhtml_Block_Widget_Form:
+
+protected function _prepareForm()
+    {
+        return $this;
+    }
+
+    /**
+     * This method is called before rendering HTML
+     *
+     * @return Mage_Adminhtml_Block_Widget_Form
+     */
+    protected function _beforeToHtml()
+    {
+        $this->_prepareForm();
+        $this->_initFormValues();
+        return parent::_beforeToHtml();
+    }
+
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
